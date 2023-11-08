@@ -5,7 +5,7 @@ import com.QuizApp.QuizApp.Dao.QuizDao;
 import com.QuizApp.QuizApp.entity.Question;
 import com.QuizApp.QuizApp.entity.QuestionWrapper;
 import com.QuizApp.QuizApp.entity.Quiz;
-import org.apache.coyote.Response;
+import com.QuizApp.QuizApp.entity.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,15 +50,13 @@ public class QuizService {
     public ResponseEntity<Integer> calculateResult(Integer id, List<Response> responses) {
         Quiz quiz = quizDao.findById(id).get();
         List<Question> questions = quiz.getQuestions();
-        int i =0;
-        int right =0;
-        
+        int right =0; int i =0;
         for (Response response : responses){
-            if (response.getMessage().equals(questions.get(i).getRightAns())){
+            if (response.getResponse().equals(questions.get(i).getRightAns())){
                 right++;
             }
             i++;
         }
-        return new ResponseEntity<>(right, HttpStatus.OK);
+        return new ResponseEntity<>(right,HttpStatus.OK);
     }
 }

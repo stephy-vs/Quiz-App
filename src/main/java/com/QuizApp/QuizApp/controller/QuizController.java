@@ -2,8 +2,8 @@ package com.QuizApp.QuizApp.controller;
 
 import com.QuizApp.QuizApp.entity.Question;
 import com.QuizApp.QuizApp.entity.QuestionWrapper;
+import com.QuizApp.QuizApp.entity.Response;
 import com.QuizApp.QuizApp.service.QuizService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
