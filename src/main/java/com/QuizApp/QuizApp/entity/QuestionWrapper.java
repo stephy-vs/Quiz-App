@@ -8,6 +8,7 @@ public class QuestionWrapper {
 
     @Column(name = "id")
     public Integer id;
+
     @Column(name = "questionTitle")
     public String questionTitle;
 

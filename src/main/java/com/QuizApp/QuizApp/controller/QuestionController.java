@@ -25,8 +25,22 @@ public class QuestionController {
         return questionService.getQuestionsByCategory(category);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<String> addQuestion(@RequestBody Question question){
-        return questionService.addQuestion(question);
+   // @PostMapping("/add")
+//    public ResponseEntity<String> addQuestion(@RequestBody Question question){
+//        return questionService.addQuestion(question);
+//    }
+//    public ResponseEntity<Question> addQuestion(@PathVariable Integer id,@RequestBody Question question){
+//        Question question1 = questionService.addQuestion(id,question);
+//        return new ResponseEntity<>(question1,HttpStatus.OK);
+//    }
+
+    @GetMapping(path = "/categories")
+    public ResponseEntity<List<String>> getAllCategories(){
+        List<String> categories = questionService.getAllCategories();
+        if (categories.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }else {
+            return new ResponseEntity<>(categories,HttpStatus.OK);
+        }
     }
 }

@@ -12,12 +12,19 @@ public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public int id;
+    public Integer id;
 
     @Column(name = "title")
     private String title;
 
-    @ManyToMany
-    @Column(name = "questions")
+//    @ManyToMany
+//    @Column(name = "questions")
+//    private List<Question> questions;
+
+    @OneToMany(mappedBy = "quiz")
     private List<Question> questions;
+
+
+    @Column(name = "category")
+    private String category;
 }

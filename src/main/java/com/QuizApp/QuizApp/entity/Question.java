@@ -1,5 +1,6 @@
 package com.QuizApp.QuizApp.entity;
 
+import com.QuizApp.QuizApp.entity.Quiz;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -11,6 +12,7 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public Integer id;
+
     @Column(name = "questionTitle")
     public String questionTitle;
 
@@ -31,5 +33,9 @@ public class Question {
 
     @Column(name = "category")
     public String category;
+
+    @ManyToOne
+    @JoinColumn(name = "quiz_id")
+    private Quiz quiz;
 
 }
