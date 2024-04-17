@@ -12,13 +12,16 @@ public class QuizResult {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "quizName")
-    private String quizName;
+    @Column(name = "quizId")
+    private Integer quizId;
 
-    @Column(name = "studentId")
-    private Integer studentId;
+    @Column(name = "studentName")
+    private String studentName;
 
     @Column(name = "score")
     private Integer score;
+
+    @Column(name = "total")
+    private Integer total;
 
 }

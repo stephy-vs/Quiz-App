@@ -26,4 +26,14 @@ public class RegistrationStudent {
 
     @Column(name = "password")
     private String password;
+
+    public RegistrationStudent() {
+    }
+
+    public RegistrationStudent(Integer studentId, String name, String course, String courseYear) {
+        StudentId = studentId;
+        this.name = name;
+        this.course = course;
+        this.courseYear = courseYear;
+    }
 }

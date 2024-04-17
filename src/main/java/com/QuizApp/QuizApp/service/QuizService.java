@@ -157,23 +157,39 @@ public class QuizService {
         return titles;
     }
 
-    public ResponseEntity<Integer> calculateResult(Integer quizId, List<Response> responses) {
+    public ResponseEntity<QuizResult> calculateResult(Integer quizId, String studentName,
+                                                   Integer total, List<Response> responses) {
         int score =0;
         List<QuestionData> questionData = questionDataRepo.findByQuizId(quizId);
-        for (Response response : responses){
-            QuestionData questionData1 =findQuestionByID(questionData,response.getId());
-            if (questionData1 != null && questionData1.getRightAns().equals(response.getResponse())){
-                score++;
+        for (QuestionData question : questionData){
+            Response userResponse = findUserResponse(responses,question.getId());
+            if (userResponse!=null){
+                if (question.getRightAns().equals(userResponse.getResponse())){
+                    score++;
+                }
             }
         }
-        return ResponseEntity.ok(score);
+        QuizResult quizResult = new QuizResult();
+        quizResult.setQuizId(quizId);
+        quizResult.setStudentName(studentName);
+        quizResult.setScore(score);
+        quizResult.setTotal(total);
+       QuizResult qResult = quizResultRepo.save(quizResult);
+        return ResponseEntity.ok(qResult);
     }
-
-    private QuestionData findQuestionByID(List<QuestionData> questionData, Integer id) {
-        for (QuestionData questionData1 : questionData){
-            if (questionData1.getId().equals(id));
-            return questionData1;
+    private Response findUserResponse(List<Response> responses, Integer id) {
+        for (Response response : responses){
+            if (response.getId().equals(id)){
+                return response;
+            }
         }
         return null;
+    }
+
+
+    public List<QuizResult> getQuizResult(Integer quizId) {
+//        Optional<QuizResult> quizResultOptional = quizResultRepo.findByQuizId(quizId);
+//        return quizResultOptional.orElse(null);
+        return quizResultRepo.findByQuizId(quizId);
     }
 }

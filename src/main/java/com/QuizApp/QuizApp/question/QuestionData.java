@@ -13,7 +13,7 @@ public class QuestionData {
     private Integer id;
 
     @Column(name = "questionTitle")
-    private String questionName;
+    private String questionTitle;
 
     @Column(name = "option1")
     private String option1;
