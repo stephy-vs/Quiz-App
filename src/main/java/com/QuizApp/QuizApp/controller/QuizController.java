@@ -31,46 +31,20 @@ public class QuizController {
     public ResponseEntity<List<QuizData>> getAllQuiz(){
         return quizService.getAllQuiz();
     }
-    //@PostMapping("create")
-//    public ResponseEntity<String> createQuiz(@RequestParam String category,@RequestParam int numQ, @RequestParam String title){
-//        return quizService.createQuiz(category,numQ,title);
-//    }
-
-//    public ResponseEntity<QuizDTO> createQuiz(@RequestParam String category,@RequestParam int numQ,@RequestParam String title){
-//        QuizDTO quizDTO = quizService.createQuiz(category,numQ,title);
-//        return new ResponseEntity<>(quizDTO, HttpStatus.CREATED);
-//    }
-
-
-    @GetMapping("titles")
-//    public ResponseEntity<List<String>> getAllQuizTitles(){
-//        List<String> titles = quizService.getAllQuizTitles();
-//        return new ResponseEntity<>(titles,HttpStatus.OK);
-//    }
-    public ResponseEntity<Map<Integer,String>> getAllTitlesAndIds(){
-        List<QuizTitleDTO> quizTitleDTOList = quizService.getAllQuizes();
-        Map<Integer,String> titleIdMap = new HashMap<>();
-        for (QuizTitleDTO quizTitleDTO : quizTitleDTOList){
-            titleIdMap.put(quizTitleDTO.getId(), quizTitleDTO.getTitle());
-        }
-        return new ResponseEntity<>(titleIdMap,HttpStatus.OK);
+    @PostMapping("submit/{quizId}")
+    public ResponseEntity<QuizResult> submitQuiz(@PathVariable Integer quizId,
+                                              @RequestParam  String studentName,@RequestParam Integer  total,
+                                              @RequestBody List<Response> responses){
+        return quizService.calculateResult(quizId,studentName,total,responses);
     }
 
-//    @GetMapping("get/{id}")
-//    public ResponseEntity<List<QuestionWrapper>> getQuizQuestions(@PathVariable Integer id){
-//        return quizService.getQuizQuestions(id);
-//    }
-
-    //@PostMapping("submit/{id}")
-//
-//    public ResponseEntity<QuizResult> submitQuiz(@RequestParam Integer studentId, @RequestParam String title,
-//                                                 @RequestParam String category,@PathVariable Integer id,
-//                                                 @RequestBody List<Response> responses){
-//        return quizService.calculateResult(studentId,title,category,id,responses);
-//    }
-
-    @PostMapping("submit/{quizId}")
-    public ResponseEntity<Integer> submitQuiz(@PathVariable Integer quizId, @RequestBody List<Response> responses){
-        return quizService.calculateResult(quizId,responses);
+    @GetMapping(path = "/result/{quizId}")
+    public ResponseEntity<List<QuizResult>> getQuizResult(@PathVariable Integer quizId){
+        List<QuizResult> quizResult = quizService.getQuizResult(quizId);
+        if (!quizResult.isEmpty()){
+            return ResponseEntity.ok(quizResult);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
